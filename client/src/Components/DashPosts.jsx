@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { set } from "mongoose";
+// import { set } from "mongoose";
 
 export default function DashPosts() {
   const { currentUser } = useSelector((state) => state.user);
@@ -86,8 +86,8 @@ export default function DashPosts() {
                 <span>Edit</span>
               </Table.HeadCell>
             </Table.Head>
-            {userPosts.map((post) => (
-              <Table.Body className="divide-y">
+            {userPosts.map((post, index) => (
+              <Table.Body className="divide-y" key={index}>
                 <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                   <Table.Cell>
                     {new Date(post.updatedAt).toLocaleDateString()}
@@ -160,7 +160,7 @@ export default function DashPosts() {
             </h3>
             <div className="flex justify-center gap-4">
               <Button color="failure" onClick={handleDeletePost}>
-                Yes, I'm sure
+                Yes, Im sure
               </Button>
               <Button color="gray" onClick={() => setShowModal(false)}>
                 No, cancel

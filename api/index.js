@@ -14,6 +14,7 @@ const PORT = 4000;
 dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 // mongodb connection
 mongoose

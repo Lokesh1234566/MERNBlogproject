@@ -20,14 +20,15 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/search" element={<Search />} />
+
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
@@ -36,7 +37,7 @@ const App = () => {
             <Route path="/update-post/:postId" element={<UpdatePost />} />
           </Route>
 
-          <Route path="/project" element={<Project />} />
+          <Route path="/projects" element={<Project />} />
           <Route path="/post/:postSlug" element={<PostPage />} />
         </Routes>
 

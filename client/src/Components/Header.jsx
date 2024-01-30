@@ -1,25 +1,17 @@
-import React, { useEffect, useState } from "react";
-import {
-  Avatar,
-  Button,
-  Dropdown,
-  DropdownHeader,
-  Navbar,
-  TextInput,
-} from "flowbite-react";
+import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import { signoutSuccess } from "../redux/user/userSlice";
+import React, { useEffect, useState } from "react";
 
 const Header = () => {
   const path = useLocation().pathname;
   const loaction = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
   const [searchTerm, setSearchTerm] = useState("");
@@ -92,8 +84,8 @@ const Header = () => {
         <Button
           className="w-12 h-10 hidden sm:inline"
           color="gray"
-          rounded
-          onClick={() => dispatch(toggleTheme)}
+          rounded={theme === "light" ? "true" : "false"} // Use a string value
+          onClick={() => dispatch(toggleTheme())}
         >
           {theme === "light" ? <FaSun /> : <FaMoon />}
         </Button>

@@ -1,4 +1,4 @@
-import { Alert, Button, Modal, ModalBody, TextInput } from "flowbite-react";
+import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -7,7 +7,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { app } from "../firebase";
+import { app } from "../firebase.js";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import {
@@ -18,10 +18,11 @@ import {
   deleteUserSuccess,
   deleteUserFailure,
   signoutSuccess,
-} from "../redux/user/userSlice";
+} from "../redux/user/userSlice.js";
 import { useDispatch } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { BiShow, BiHide } from "react-icons/bi";
 
 export default function DashProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -34,8 +35,14 @@ export default function DashProfile() {
   const [updateUserError, setUpdateUserError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const filePickerRef = useRef();
   const dispatch = useDispatch();
+
+  const handleShowPassword = () => {
+    setShowPassword((preve) => !preve);
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -54,7 +61,7 @@ export default function DashProfile() {
     //   match /b/{bucket}/o {
     //     match /{allPaths=**} {
     //       allow read;
-    //       allow write: if
+    //       allow write : if
     //       request.resource.size < 2 * 1024 * 1024 &&
     //       request.resource.contentType.matches('image/.*')
     //     }
@@ -213,6 +220,7 @@ export default function DashProfile() {
         {imageFileUploadError && (
           <Alert color="failure">{imageFileUploadError}</Alert>
         )}
+
         <TextInput
           type="text"
           id="username"
@@ -227,12 +235,20 @@ export default function DashProfile() {
           defaultValue={currentUser.email}
           onChange={handleChange}
         />
-        <TextInput
-          type="password"
-          id="password"
-          placeholder="password"
-          onChange={handleChange}
-        />
+        <div className="relative">
+          <TextInput
+            type={showPassword ? "text" : "password"}
+            id="password"
+            placeholder="password"
+            onChange={handleChange}
+          />
+          <span
+            className="flex text-xl cursor-pointer absolute right-3 top-1/4 transform -translate-y-1/6"
+            onClick={handleShowPassword}
+          >
+            {showPassword ? <BiShow /> : <BiHide />}
+          </span>
+        </div>
         <Button
           type="submit"
           gradientDuoTone="purpleToBlue"
